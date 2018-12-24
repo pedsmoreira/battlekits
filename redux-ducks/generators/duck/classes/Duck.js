@@ -22,24 +22,27 @@ export default class Duck {
 
   addActionConst(action: string) {
     const prefix = casex(this.file.name, 'na-me');
-    this.file.after('// Actions', `const __NA_ME__ = '${prefix}/__NA-ME__';`, action);
+
+    this.file
+      .find('// Actions')
+      .after(`const __NA_ME__ = '${prefix}/__NA-ME__';`)
+      .name(action);
   }
 
   addActionToSwitch(action: string) {
-    this.file.after(
-      'switch (action.type) {',
-      spaces(4, ['case __NA_ME__:', '  // Perform action', '  return state;']),
-      action
-    );
+    this.file
+      .find('switch (action.type) {')
+      .after(['  case __NA_ME__:', '  // Perform action', '  return state;'])
+      .name(action)
+      .indent();
   }
 
   addActionFunction(action: string) {
     const fn = casex(`${action}_${this.file.name}`, 'naMe');
 
-    this.file.after(
-      '// Action Creators',
-      [`export function ${fn}() {`, '  return { type: __NA_ME__ };', '}', ''],
-      action
-    );
+    this.file
+      .find('// Action Creators')
+      .after([`export function ${fn}() {`, '  return { type: __NA_ME__ };', '}', ''])
+      .name(action);
   }
 }

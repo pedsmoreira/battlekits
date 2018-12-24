@@ -15,10 +15,16 @@ export default class CombinedReducers {
   }
 
   addImport(name: string) {
-    this.file.afterLast('import ', "import __naMe__ from './modules/__naMe__'", name);
+    this.file
+      .last('import ')
+      .after("import __naMe__ from './modules/__naMe__'")
+      .name(name);
   }
 
   addExport(name: string) {
-    this.file.after('combineReducers({', '  __naMe__,', name);
+    this.file
+      .find('combineReducers({')
+      .after('  __naMe__,')
+      .name(name);
   }
 }

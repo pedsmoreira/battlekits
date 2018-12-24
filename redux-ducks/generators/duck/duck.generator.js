@@ -1,6 +1,6 @@
 // @flow
 
-import { Generator, File, log, memoize } from 'battlecry';
+import { Generator, File, memoize } from 'battlecry';
 import Duck from './classes/Duck';
 import CombinedReducers from './classes/CombinedReducers';
 
@@ -21,7 +21,6 @@ export default class DuckGenerator extends Generator {
 
   @memoize
   get duckFile() {
-    console.log('getting duck file');
     return this.template('_*').existing(`${REDUX_PATH}/modules/`, this.nameArg);
   }
 
