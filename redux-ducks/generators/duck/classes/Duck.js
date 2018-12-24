@@ -32,7 +32,7 @@ export default class Duck {
   addActionToSwitch(action: string) {
     this.file
       .find('switch (action.type) {')
-      .after(['  case __NA_ME__:', '  // Perform action', '  return state;'])
+      .after('  case __NA_ME__:', '  // Perform action', 'return state;')
       .name(action)
       .indent();
   }
@@ -42,7 +42,7 @@ export default class Duck {
 
     this.file
       .find('// Action Creators')
-      .after([`export function ${fn}() {`, '  return { type: __NA_ME__ };', '}', ''])
+      .after(`export function ${fn}() {`, '  return { type: __NA_ME__ };', '}', '')
       .name(action);
   }
 }

@@ -17,7 +17,7 @@ export default class CombinedReducers {
   addImport(name: string) {
     this.file
       .last('import ')
-      .after("import __naMe__ from './modules/__naMe__'")
+      .after("import __naMe__ from './modules/__naMe__';")
       .name(name);
   }
 
