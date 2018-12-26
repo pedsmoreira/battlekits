@@ -26,8 +26,8 @@ export default class CombinedReducers {
     this.file
       .find('combineReducers({')
       .untilEnclosing.dive()
-      .add(collection =>
-        collection.last
+      .add(lines =>
+        lines.last
           .after('__naMe__')
           .name(name)
           .indent()
