@@ -26,7 +26,7 @@ export default class ComponentGenerator extends Generator {
       args: 'name',
       options: {
         path: {
-          description: `The folder where the component will be placed`,
+          description: `Where the files go`,
           default: DEFAULT_PATH
         },
         tree: {
