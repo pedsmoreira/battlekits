@@ -11,7 +11,7 @@ export default class CombinedReducers {
 
   addReducer(name: string) {
     this.addImport(name);
-    this.addExport(name);
+    this.addToCombine(name);
   }
 
   addImport(name: string) {
@@ -21,10 +21,15 @@ export default class CombinedReducers {
       .name(name);
   }
 
-  addExport(name: string) {
-    this.file
-      .find('combineReducers({')
-      .after('  __naMe__,')
+  addToCombine(name: string) {
+    const previous = this.file.find('combineReducers({').enclosing.previous;
+
+    previous
+      .after('__naMe__')
+      .indent()
       .name(name);
+
+    if (previous.text.endsWith('//')) previous.remove();
+    else previous.rightPad(',');
   }
 }
