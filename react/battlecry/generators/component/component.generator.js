@@ -21,7 +21,7 @@ const DEFAULT_TREE = 'folder';
 export default class ComponentGenerator extends Generator {
   compatibility = '1.x';
 
-  config2 = {
+  config = {
     generate: {
       args: 'name',
       options: {
