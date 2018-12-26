@@ -18,7 +18,7 @@ export default class CombinedReducers {
   addImport(name: string) {
     this.file
       .consecutive("from './modules/")
-      .add(collection => collection.last.after("import __naMe__ from './modules/__naMe__';").name(name))
+      .add(lines => lines.last.after("import __naMe__ from './modules/__naMe__';").name(name))
       .sort();
   }
 
@@ -33,8 +33,7 @@ export default class CombinedReducers {
           .indent()
       )
       .sort()
-      .rightPad(',')
-      .last.rightUnpad(',');
+      .trailing(',');
   }
 
   removeInitialMarkers() {
