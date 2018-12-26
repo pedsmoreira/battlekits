@@ -53,6 +53,9 @@ export default class ComponentGenerator extends Generator {
   }
 
   generate() {
-    this.templates().forEach(file => file.saveAs(this.folder, this.args.name));
+    this.templates().forEach(file => {
+      if (file.name === 'index' && this.tree === 'flat') return;
+      file.saveAs(this.folder, this.args.name);
+    });
   }
 }
