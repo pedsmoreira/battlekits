@@ -12,24 +12,32 @@ export default class CombinedReducers {
   addReducer(name: string) {
     this.addImport(name);
     this.addToCombine(name);
+    if (!this.file.exists) this.removeInitialMarkers();
   }
 
   addImport(name: string) {
     this.file
-      .last('import ')
-      .after("import __naMe__ from './modules/__naMe__';")
-      .name(name);
+      .consecutive("from './modules/")
+      .add(collection => collection.last.after("import __naMe__ from './modules/__naMe__';").name(name))
+      .sort();
   }
 
   addToCombine(name: string) {
-    const previous = this.file.find('combineReducers({').enclosing.previous;
+    this.file
+      .find('combineReducers({')
+      .untilEnclosing.dive()
+      .add(collection =>
+        collection.last
+          .after('__naMe__')
+          .name(name)
+          .indent()
+      )
+      .sort()
+      .rightPad(',')
+      .last.rightUnpad(',');
+  }
 
-    previous
-      .after('__naMe__')
-      .indent()
-      .name(name);
-
-    if (previous.text.endsWith('//')) previous.remove();
-    else previous.rightPad(',');
+  removeInitialMarkers() {
+    this.file.all('// Marker -').remove();
   }
 }
