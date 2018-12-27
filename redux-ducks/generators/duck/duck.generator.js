@@ -21,8 +21,7 @@ export default class DuckGenerator extends Generator {
     return actions.reverse();
   }
 
-  @command('name ...actions?')
-  @description('Create or modify duck to add actions')
+  @command({ args: 'name ...actions?', description: 'Create or modify duck to add actions' })
   generate() {
     this.addDuckToConfig();
     this.addActionsToDuck();

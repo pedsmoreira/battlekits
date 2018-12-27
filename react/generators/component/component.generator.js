@@ -21,11 +21,11 @@ const DEFAULT_TREE = 'folder';
 export default class ComponentGenerator extends Generator {
   compatibility = '1.x';
 
-  get folder(): string {
+  get folder() {
     return `src/components/__Na/Me__/`;
   }
 
-  get modifier(): string {
+  get modifier() {
     const { tree } = this.options;
 
     if (tree === 'folder') return '__NaMe__/';
@@ -38,10 +38,9 @@ export default class ComponentGenerator extends Generator {
     return `${this.options.path}/${this.modifier}`;
   }
 
-  @command('name')
+  @command({ args: 'name', description: 'Create a new component' })
   @option('path', { arg: 'required', defaultArg: DEFAULT_PATH, description: 'Where the file goes' })
   @option('tree', { arg: 'required', defaultArg: DEFAULT_TREE, description: `flat | folder | nested` })
-  @description('Create a new component')
   generate() {
     this.templates().forEach(file => {
       if (file.name === 'index' && this.tree === 'flat') return;
