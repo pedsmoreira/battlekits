@@ -1,4 +1,4 @@
-import { Generator, command, description, File, memoize } from 'battlecry';
+import { Generator, command, File, memoize } from 'battlecry';
 import Duck from './classes/Duck';
 import CombinedReducers from './classes/CombinedReducers';
 

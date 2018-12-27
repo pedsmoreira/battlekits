@@ -1,4 +1,4 @@
-import { Generator, command, description, option } from 'battlecry';
+import { Generator, command } from 'battlecry';
 
 const DEFAULT_PATH = 'src/components';
 
@@ -39,8 +39,8 @@ export default class ComponentGenerator extends Generator {
   }
 
   @command({ args: 'name', description: 'Create a new component' })
-  @option('path', { arg: 'required', defaultArg: DEFAULT_PATH, description: 'Where the file goes' })
-  @option('tree', { arg: 'required', defaultArg: DEFAULT_TREE, description: `flat | folder | nested` })
+  @command.option('path', { arg: 'required', defaultArg: DEFAULT_PATH, description: 'Where the file goes' })
+  @command.option('tree', { arg: 'required', defaultArg: DEFAULT_TREE, description: `flat | folder | nested` })
   generate() {
     this.templates().forEach(file => {
       if (file.name === 'index' && this.tree === 'flat') return;
