@@ -1,4 +1,4 @@
-import { Generator } from 'battlecry';
+import { Generator, command, description, option } from 'battlecry';
 
 const DEFAULT_PATH = 'src/components';
 
@@ -21,39 +21,27 @@ const DEFAULT_TREE = 'folder';
 export default class ComponentGenerator extends Generator {
   compatibility = '1.x';
 
-  config = {
-    generate: {
-      args: 'name',
-      options: {
-        path: {
-          description: `Where the files go`,
-          arg: 'required',
-          defaultArg: DEFAULT_PATH
-        },
-        tree: {
-          description: `flat | folder | nested`,
-          arg: 'required',
-          defaultArg: DEFAULT_TREE
-        }
-      },
-      description: 'Create a new component'
-    }
-  };
-
   get folder(): string {
     return `src/components/__Na/Me__/`;
   }
 
-  get folder() {
-    const { path, tree } = this.options;
+  get modifier(): string {
+    const { tree } = this.options;
 
-    let modifier = '';
-    if (tree === 'folder') modifier = '__NaMe__/';
-    else if (tree === 'nested') modifier = '__Na/Me__';
+    if (tree === 'folder') return '__NaMe__/';
+    else if (tree === 'nested') return '__Na/Me__/';
 
-    return `${path}/${modifier}`;
+    return '';
   }
 
+  get folder() {
+    return `${this.options.path}/${this.modifier}`;
+  }
+
+  @command('name')
+  @option('path', { arg: 'required', defaultArg: DEFAULT_PATH, description: 'Where the file goes' })
+  @option('tree', { arg: 'required', defaultArg: DEFAULT_TREE, description: `flat | folder | nested` })
+  @description('Create a new component')
   generate() {
     this.templates().forEach(file => {
       if (file.name === 'index' && this.tree === 'flat') return;
