@@ -1,6 +1,4 @@
-// @flow
-
-import { Generator, File, memoize } from 'battlecry';
+import { Generator, command, description, File, memoize } from 'battlecry';
 import Duck from './classes/Duck';
 import CombinedReducers from './classes/CombinedReducers';
 
@@ -8,20 +6,9 @@ const CONFIG_FILE = 'configureStore.js';
 const REDUX_PATH = 'src/redux';
 
 export default class DuckGenerator extends Generator {
-  config = {
-    generate: {
-      args: 'name ...actions?',
-      description: 'Create or modify duck to add actions'
-    }
-  };
-
-  get nameArg(): any {
-    return this.args.name; // Avoid flow issues
-  }
-
   @memoize
   get duckFile() {
-    return this.template('_*').existing(`${REDUX_PATH}/modules/`, this.nameArg);
+    return this.template('_*').existing(`${REDUX_PATH}/modules/`, this.args.name);
   }
 
   @memoize
@@ -34,6 +21,8 @@ export default class DuckGenerator extends Generator {
     return actions.reverse();
   }
 
+  @command('name ...actions?')
+  @description('Create or modify duck to add actions')
   generate() {
     this.addDuckToConfig();
     this.addActionsToDuck();
@@ -47,7 +36,7 @@ export default class DuckGenerator extends Generator {
   addDuckToConfig() {
     if (this.duckFile.exists) return;
 
-    new CombinedReducers(this.configFile).addReducer(this.nameArg);
+    new CombinedReducers(this.configFile).addReducer(this.args.name);
     this.configFile.save();
   }
 }
