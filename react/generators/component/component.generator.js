@@ -27,11 +27,13 @@ export default class ComponentGenerator extends Generator {
       options: {
         path: {
           description: `Where the files go`,
-          default: DEFAULT_PATH
+          arg: 'required',
+          defaultArg: DEFAULT_PATH
         },
         tree: {
           description: `flat | folder | nested`,
-          default: DEFAULT_TREE
+          arg: 'required',
+          defaultArg: DEFAULT_TREE
         }
       },
       description: 'Create a new component'
