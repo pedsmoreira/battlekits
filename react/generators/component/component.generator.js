@@ -40,10 +40,10 @@ export default class ComponentGenerator extends Generator {
 
   @command({ args: 'name', description: 'Create a new component' })
   @command.option('path', { arg: 'required', defaultArg: DEFAULT_PATH, description: 'Where the file goes' })
-  @command.option('tree', { arg: 'required', defaultArg: DEFAULT_TREE, description: `flat | folder | nested` })
+  @command.option('tree', { arg: 'required', defaultArg: DEFAULT_TREE, description: 'flat | folder | nested' })
   generate() {
     this.templates().forEach(file => {
-      if (file.name === 'index' && this.tree === 'flat') return;
+      if (file.name === 'index' && this.options.tree === 'flat') return;
       file.saveAs(this.folder, this.args.name);
     });
   }
